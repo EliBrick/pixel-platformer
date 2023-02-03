@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public float maxHorizontalSpeed = .05f;
     public float horizontalAccelerationCoefficient = .01f;
+    [Range(0, 1)]
+    public float inAirMovementResistance = .5f;
     public float frictionCoefficient = .001f;
     public float groundedDistance = .05f;
     public float jumpForce = 10;
@@ -121,7 +123,9 @@ public class PlayerMovement : MonoBehaviour
     {
         float v0 = rb2D.velocity.x;
         float t = Time.deltaTime;
-        float v = Mathf.Clamp(v0 - horizontalAccelerationCoefficient*t, -maxHorizontalSpeed, maxHorizontalSpeed);
+        float movementSpeed = horizontalAccelerationCoefficient;
+        if (!grounded) movementSpeed *= (1 - inAirMovementResistance);
+        float v = Mathf.Clamp(v0 - movementSpeed*t, -maxHorizontalSpeed, maxHorizontalSpeed);
         float a = (v - v0) / t;
         controlledAcceleration.x += a;
         //Debug.Log("Press Left Acceleration: " + a);
@@ -131,7 +135,9 @@ public class PlayerMovement : MonoBehaviour
     {
         float v0 = rb2D.velocity.x;
         float t = Time.deltaTime;
-        float v = Mathf.Clamp(v0 + horizontalAccelerationCoefficient * t, -maxHorizontalSpeed, maxHorizontalSpeed);
+        float movementSpeed = horizontalAccelerationCoefficient;
+        if (!grounded) movementSpeed *= (1-inAirMovementResistance);
+        float v = Mathf.Clamp(v0 + movementSpeed * t, -maxHorizontalSpeed, maxHorizontalSpeed);
         float a = (v - v0) / t;
         controlledAcceleration.x += a;
         //Debug.Log("Press Right Acceleration: " + a);
@@ -147,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ApplyFriction()
     {
-        //TODO only apply if player is on ground
+        if (!grounded) return;
         float v0 = rb2D.velocity.x;
         float finalVelocity = Mathf.MoveTowards(rb2D.velocity.x, 0, frictionCoefficient*Time.deltaTime);
         float a = (finalVelocity - v0) / Time.deltaTime;
