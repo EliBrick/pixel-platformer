@@ -1553,7 +1553,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.1519649, g: 0.047098607, b: 0.16981131, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2254,12 +2254,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda691e6631930a42b57e19f1e4d5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHorizontalSpeed: 6
-  horizontalAccelerationCoefficient: 80
-  inAirMovementResistance: 0.8
-  frictionCoefficient: 40
+  maxHorizontalSpeed: 7.5
+  horizontalAccelerationCoefficient: 146
+  inAirMovementResistance: 0.72
+  frictionCoefficient: 22.2
   groundedDistance: 0.1
-  jumpForce: 600
+  jumpForce: 1040
   collider: {fileID: 1005628141}
 --- !u!212 &1005628138
 SpriteRenderer:
@@ -2343,7 +2343,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 10
   m_Material: {fileID: 6200000, guid: ef92523f161187840abf007ee0cdcc0c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
