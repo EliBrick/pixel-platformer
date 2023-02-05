@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,13 +10,15 @@ public class PlayerMovement : MonoBehaviour
     [Range(0, 1)]
     public float inAirMovementResistance = .5f;
     public float frictionCoefficient = .001f;
-    public float groundedDistance = .05f;
     public float jumpForce = 10;
+    public float gravityScale = 1;
+    private float groundedDistance = .1f;
     private bool grounded = false;
     private Vector2 controlledAcceleration = Vector2.zero;
     private Rigidbody2D rb2D;
-    public new Collider2D collider;
-    public Dictionary<Movement, bool> hasPressed = new Dictionary<Movement, bool>();
+    private new Collider2D collider;
+    public Dictionary<Movement, bool> hasPressed = new();
+    public RuntimePresets.Preset movementPreset;
 
     public enum Movement {
         Left,
@@ -26,11 +29,21 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LoadMovementPreset();
         rb2D = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
-        foreach(Movement m in System.Enum.GetValues(typeof(Movement)))
+        foreach(Movement m in Enum.GetValues(typeof(Movement)))
         {
             hasPressed[m] = false;
+        }
+
+    }
+
+    void LoadMovementPreset()
+    {
+        if (movementPreset is not null && movementPreset.CanBeAppliedTo(this))
+        {
+            movementPreset.ApplyTo(this);
         }
     }
 
@@ -72,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        rb2D.gravityScale = this.gravityScale;
         #region Handle Keyboard Inputs
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {

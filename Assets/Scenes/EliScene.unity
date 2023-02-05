@@ -2254,13 +2254,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda691e6631930a42b57e19f1e4d5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHorizontalSpeed: 7.5
-  horizontalAccelerationCoefficient: 146
-  inAirMovementResistance: 0.72
-  frictionCoefficient: 22.2
-  groundedDistance: 0.1
-  jumpForce: 1040
-  collider: {fileID: 1005628141}
+  maxHorizontalSpeed: 8
+  horizontalAccelerationCoefficient: 80
+  inAirMovementResistance: 0.8
+  frictionCoefficient: 40
+  jumpForce: 600
+  gravityScale: 4
+  movementPreset: {fileID: 250722687855323773, guid: d4183fe56c369e543b7a0acef5056b07, type: 3}
 --- !u!212 &1005628138
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2347,7 +2347,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: ef92523f161187840abf007ee0cdcc0c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &1005628141
 BoxCollider2D:
